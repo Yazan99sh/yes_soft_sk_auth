@@ -6,7 +6,6 @@ import 'package:chat_testing/Module_auth/UI/Widgets/field.dart';
 import 'package:chat_testing/Module_auth/manager/Auth_manager/auth_manager.dart';
 import 'package:chat_testing/Module_auth/repository/auth/auth_repository.dart';
 import 'package:chat_testing/Module_auth/request/login_request/login_request.dart';
-import 'package:chat_testing/Module_auth/verifyField.dart';
 import 'package:chat_testing/Module_theme/ColorPicker.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/ResetDialogPassword.dart';
