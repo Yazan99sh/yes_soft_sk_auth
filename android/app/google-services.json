@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "599684464913",
+    "firebase_url": "https://chet-chat-dbde3.firebaseio.com",
+    "project_id": "chet-chat-dbde3",
+    "storage_bucket": "chet-chat-dbde3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599684464913:android:9015d76062bb16a5a3ccb0",
+        "android_client_info": {
+          "package_name": "com.example.chat_testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599684464913-ftq52pqklbfgvnihspo4atvk5171mb5m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat_testing",
+            "certificate_hash": "fc1f4b5f0afc74611647a3d02585386a0d94656e"
+          }
+        },
+        {
+          "client_id": "599684464913-b0amqomq5pslacp1qn3kt3pehpc6nr1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD26xL7botLbBmjWr6BH7w9QtQHWC8nj64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599684464913-b0amqomq5pslacp1qn3kt3pehpc6nr1q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
