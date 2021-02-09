@@ -1,4 +1,3 @@
-import 'package:chat_testing/Module_auth/UI/Widgets/Google.dart';
 import 'package:chat_testing/Module_auth/UI/Widgets/LRFrame.dart';
 import 'package:chat_testing/Module_auth/UI/Widgets/LoadingCircular.dart';
 import 'package:chat_testing/Module_auth/UI/Widgets/StackedBottun.dart';
@@ -121,7 +120,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                StackedButton(text: 'Login',onPressed: (){
+                StackedButton(text:'Login',onPressed: (){
                   if (_loginFormKey.currentState.validate()){
                     setState(() {
                       loading = true;

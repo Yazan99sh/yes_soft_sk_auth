@@ -1,10 +1,16 @@
+import 'package:chat_testing/Module_auth/request/login_request/LoginRequest_Api.dart';
 import 'package:chat_testing/Module_auth/request/login_request/login_request.dart';
 import 'package:chat_testing/Module_auth/request/register_request/register_request.dart';
+import 'package:chat_testing/Module_auth/response/login_response.dart';
+import 'package:chat_testing/consts/urls.dart';
+import 'package:chat_testing/module_network/http_client/http_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepository {
-  Future<bool> createUser(RegisterRequest request) async {
+  ApiClient _apiClient;
+  Future<String> createUser(RegisterRequest request) async {
+    UserCredential userCredential;
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email:request.email,
@@ -14,21 +20,22 @@ class AuthRepository {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
-        return false;
+        return null;
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
-        return false;
+        return null;
       }
     } catch (e) {
       print(e);
-      return false;
+      return null;
     }
-    return true;
+    return userCredential.user.uid;
   }
 
-  Future<bool> login(LoginRequest loginRequest) async {
+  Future<dynamic> login(LoginRequest loginRequest) async {
+    UserCredential userCredential;
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: "${loginRequest.email}",
           password: "${loginRequest.password}"
       );
@@ -45,8 +52,19 @@ class AuthRepository {
       //   return e.code ;
       // }
       print(e.code);
-      return false;
+      return null;
     }
-    return true;
+    return userCredential.user.uid;
   }
+
+  Future<LoginResponse> loginApi(LoginRequestApi loginRequest) async {
+    _apiClient = ApiClient();
+    var headers = {"Content-Type": "application/json"};
+    var result = await _apiClient.post(Urls.CREATE_TOKEN_API,headers,loginRequest.toJson(),);
+    if (result == null) {
+      return null;
+    }
+    return LoginResponse.fromJson(result);
+  }
+
 }

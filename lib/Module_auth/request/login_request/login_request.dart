@@ -1,7 +1,6 @@
 class LoginRequest {
   String email;
   String password;
-
   LoginRequest({this.email, this.password});
 
   LoginRequest.fromJson(Map<String, dynamic> json) {
