@@ -6,6 +6,7 @@ import 'package:chat_testing/Module_auth/UI/Widgets/field.dart';
 import 'package:chat_testing/Module_auth/manager/Auth_manager/auth_manager.dart';
 import 'package:chat_testing/Module_auth/repository/auth/auth_repository.dart';
 import 'package:chat_testing/Module_auth/request/register_request/register_request.dart';
+import 'package:chat_testing/Module_auth/service/auth_service/auth_service.dart';
 import 'package:chat_testing/Module_theme/ColorPicker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _RegisterState extends State<Register> {
   bool loading = false;
   AuthRepository _authRepository = AuthRepository();
   AuthManager authManager;
+  AuthService authService;
   @override
   void initState() {
     super.initState();
@@ -31,6 +33,7 @@ class _RegisterState extends State<Register> {
     email = TextEditingController();
     password = TextEditingController();
     authManager = AuthManager(_authRepository);
+    authService = AuthService();
   }
 
   @override
@@ -127,7 +130,7 @@ class _RegisterState extends State<Register> {
                       setState(() {
                         loading = true;
                       });
-                      authManager.register(RegisterRequest(username:username.text,email: email.text,password: password.text)).whenComplete(() => setState((){
+                      authService.registerUser(username.text,email.text,password.text).whenComplete(() => setState((){
                         loading = false;
                       }));
                     }

@@ -17,6 +17,7 @@ class AuthRepository {
         password:request.password,
       );
       FirebaseFirestore.instance.collection('users').add({'UserId':userCredential.user.uid,'UserName':request.username});
+      return userCredential.user.uid;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -29,7 +30,6 @@ class AuthRepository {
       print(e);
       return null;
     }
-    return userCredential.user.uid;
   }
 
   Future<dynamic> login(LoginRequest loginRequest) async {
@@ -39,6 +39,7 @@ class AuthRepository {
           email: "${loginRequest.email}",
           password: "${loginRequest.password}"
       );
+      return userCredential.user.uid;
     } on FirebaseAuthException catch (e) {
       // if (e.code=='invalid-email'){
       //   return 'Wrong email pattern';
@@ -54,12 +55,12 @@ class AuthRepository {
       print(e.code);
       return null;
     }
-    return userCredential.user.uid;
   }
 
   Future<LoginResponse> loginApi(LoginRequestApi loginRequest) async {
     _apiClient = ApiClient();
-    var headers = {"Content-Type": "application/json"};
+    Map<String, String> headers = {'Access-Control-Allow':'*',
+      'Content-Type':'application/json'};
     var result = await _apiClient.post(Urls.CREATE_TOKEN_API,headers,loginRequest.toJson(),);
     if (result == null) {
       return null;

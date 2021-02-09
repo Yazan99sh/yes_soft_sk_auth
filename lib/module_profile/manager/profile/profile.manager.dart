@@ -11,4 +11,6 @@ class ProfileManager {
       await _repository.createProfile(profileRequest,token);
   Future<dynamic> getProfile(token) async =>
       await _repository.getProfile(token);
+  Future<dynamic> updateProfile(token,ProfileRequest profileRequest) async =>
+      await _repository.updateProfile(token,profileRequest);
 }

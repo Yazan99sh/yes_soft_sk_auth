@@ -5,6 +5,7 @@ import 'package:chat_testing/Module_auth/UI/Widgets/field.dart';
 import 'package:chat_testing/Module_auth/manager/Auth_manager/auth_manager.dart';
 import 'package:chat_testing/Module_auth/repository/auth/auth_repository.dart';
 import 'package:chat_testing/Module_auth/request/login_request/login_request.dart';
+import 'package:chat_testing/Module_auth/service/auth_service/auth_service.dart';
 import 'package:chat_testing/Module_theme/ColorPicker.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/ResetDialogPassword.dart';
@@ -21,12 +22,14 @@ class _LoginState extends State<Login> {
   bool loading = false;
   AuthRepository _authRepository = AuthRepository();
   AuthManager authManager;
+  AuthService authService;
   @override
   void initState() {
     super.initState();
     email = TextEditingController();
     password = TextEditingController();
     authManager = AuthManager(_authRepository);
+    authService = AuthService();
   }
   @override
   void dispose() {
@@ -125,7 +128,7 @@ class _LoginState extends State<Login> {
                     setState(() {
                       loading = true;
                     });
-                    authManager.login(LoginRequest(email: email.text,password: password.text)).whenComplete(() => setState((){
+                    authService.loginUser(email.text,password.text).whenComplete(() => setState((){
                   loading = false;
                   }));
                   }

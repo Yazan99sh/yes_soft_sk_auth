@@ -1,4 +1,3 @@
-import 'package:chat_testing/Module_auth/UI/Screen/LogedTest.dart';
 import 'package:chat_testing/Module_auth/UI/Screen/Login.dart';
 import 'package:chat_testing/Module_auth/UI/Screen/Register.dart';
 import 'package:chat_testing/Module_auth/UI/Screen/WelcomePage.dart';
@@ -15,7 +14,6 @@ class AuthorizationModule extends YesModule {
       AuthorizationRoutes.LOGIN_SCREEN: (context) => Login(),
       AuthorizationRoutes.REGISTER_SCREEN: (context) => Register(),
       AuthorizationRoutes.WelcomePage: (context) => WelcomePage(),
-      AuthorizationRoutes.Logged: (context) => Logged(),
     };
   }
 }

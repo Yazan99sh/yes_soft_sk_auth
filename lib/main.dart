@@ -1,6 +1,7 @@
 import 'package:chat_testing/Module_auth/authoriazation_module.dart';
 import 'package:chat_testing/Module_auth/authorization_routes.dart';
 import 'package:chat_testing/Module_theme/ColorPicker.dart';
+import 'package:chat_testing/module_profile/profile_module.dart';
 import 'package:chat_testing/module_splash/UI/Loading.dart';
 import 'package:chat_testing/module_splash/UI/SplashScreen.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var fullRoutesList = <String, WidgetBuilder>{};
     AuthorizationModule authorizationModule = AuthorizationModule();
+    ProfileModule profileModule = ProfileModule();
     fullRoutesList.addAll(authorizationModule.getRoutes());
+    fullRoutesList.addAll(profileModule.getRoutes());
     return MaterialApp(
       title: 'Chet Chat',
       routes: fullRoutesList,

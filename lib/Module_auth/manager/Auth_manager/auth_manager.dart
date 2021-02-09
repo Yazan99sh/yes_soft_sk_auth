@@ -10,6 +10,6 @@ class AuthManager {
 
   Future<dynamic> register(RegisterRequest registerRequest) => _authRepository.createUser(registerRequest);
 
-  Future<bool> login(LoginRequest loginRequest) => _authRepository.login(loginRequest);
+  Future<dynamic> login(LoginRequest loginRequest) => _authRepository.login(loginRequest);
   Future<LoginResponse> loginApi(LoginRequestApi loginRequestApi) => _authRepository.loginApi(loginRequestApi);
 }

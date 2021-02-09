@@ -1,4 +1,5 @@
 import 'package:chat_testing/Module_auth/authorization_routes.dart';
+import 'package:chat_testing/module_profile/profile_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class SplashScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
         print('User is currently signed out!');
       } else {
          //FirebaseAuth.instance.signOut();
-        Navigator.pushNamed(context,AuthorizationRoutes.Logged);
+        Navigator.pushNamed(context,ProfileRoutes.Logged);
         print('User is signed in!');
       }
     });
