@@ -1,30 +1,37 @@
 import 'package:chat_testing/Module_auth/authorization_routes.dart';
+import 'package:chat_testing/Module_auth/presistance/auth_prefs_helper.dart';
 import 'package:chat_testing/module_profile/profile_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
+  AuthPrefsHelper authPrefsHelper;
+  SharedPreferences preferencesHelper ;
   @override
   initState(){
   super.initState();
     FirebaseAuth auth = FirebaseAuth.instance;
-    auth.authStateChanges()
-        .listen((User user) {
-          print(mounted);
-      if (user == null) {
-         Navigator.pushNamed(context,AuthorizationRoutes.WelcomePage,);
-        print('User is currently signed out!');
-      } else {
-         //FirebaseAuth.instance.signOut();
-        Navigator.pushNamed(context,ProfileRoutes.Logged);
-        print('User is signed in!');
+    authPrefsHelper = AuthPrefsHelper();
+    auth.authStateChanges().listen((User user) async{
+      var token = await authPrefsHelper.getToken();
+      if (token == null) {
+        if (user == null) {
+          Navigator.pushNamed(context, AuthorizationRoutes.WelcomePage,);
+        } else {
+          //FirebaseAuth.instance.signOut();
+          //Navigator.pushNamed(context, ProfileRoutes.Logged);
+        }
       }
-    });
+      else {
+        Navigator.pushNamed(context, ProfileRoutes.Logged);
+      }
+    }
+    );
   }
   @override
   Widget build(BuildContext context) {

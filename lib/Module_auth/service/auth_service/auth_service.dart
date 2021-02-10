@@ -14,7 +14,7 @@ class AuthService {
   AuthManager authManager;
   ApiClient _apiClient;
 
-  Future <void> registerUser(String username ,String email,String password ) async {
+  Future <bool> registerUser(String username ,String email,String password ) async {
     authRepository = AuthRepository();
     authManager = AuthManager(authRepository);
     _apiClient = ApiClient();
@@ -22,41 +22,51 @@ class AuthService {
     String uId;
     try {
      uId = await authManager.register(RegisterRequest(username: username , email: email , password: password));
-     print(uId);
      if (uId != null) {
        var headers = {"Content-Type": "application/json"};
        var body = {"userID": "$uId","password":"$password"};
-       var result = await _apiClient.post(Urls.API_SIGN_UP, headers, body);
-       if (result['status_code']=="201") {
+       var result = await _apiClient.post(Urls.API_SIGN_UP, headers,body);
+       if (result['status_code']=="201" || result['status_code']=="200") {
          var token = await authManager.loginApi(
              LoginRequestApi(username: uId, password: password));
          if (token.token != null) {
-           profileService.createProfile(username, token.token);
+           await profileService.createProfile(username, token.token);
            AuthPrefsHelper authPrefsHelper = AuthPrefsHelper();
-           authPrefsHelper.setToken(token.token);
+           await authPrefsHelper.setToken(token.token);
+           print("logged");
+           return true;
          }
+         return false;
        }
+       else return false;
      }
+     return false;
     }catch(e){
       print(e);
+      return false;
     }
   }
-  Future <void> loginUser(String email,String password) async {
+  Future <bool> loginUser(String email,String password) async {
     authRepository = AuthRepository();
     authManager = AuthManager(authRepository);
     _apiClient = ApiClient();
     var uId;
     try {
       uId = await authManager.login(LoginRequest(email: email ,password: password));
+      if (uId != null) {
+        var token = await authManager.loginApi(LoginRequestApi(username: uId,password: password));
+        if (token.token != null){
+          AuthPrefsHelper authPrefsHelper = AuthPrefsHelper();
+          await authPrefsHelper.setToken(token.token);
+          return true;
+        }
+        else return false;
+      }
+      else
+        return false;
     }catch(e){
       print(e);
-    }
-    if (uId != null) {
-      var token = await authManager.loginApi(LoginRequestApi(username: uId,password: password));
-      if (token.token != null){
-        AuthPrefsHelper authPrefsHelper = AuthPrefsHelper();
-        authPrefsHelper.setToken(token.token);
-      }
+      return false;
     }
   }
 
@@ -69,7 +79,7 @@ class AuthService {
   }
   Future<void> logout() async {
     AuthPrefsHelper authPrefsHelper = AuthPrefsHelper();
-    await _firebaseAuth.signOut();
     authPrefsHelper.clearPrefs();
+    await _firebaseAuth.signOut();
   }
 }

@@ -24,7 +24,8 @@ class ProfileService {
      _repository = ProfileRepository();
      _manager = ProfileManager(_repository);
      String token = await authPrefsHelper.getToken();
-     return await _manager.getProfile(token);
+     var data = await _manager.getProfile(token);
+     return data;
    }
    Future<dynamic> updateProfile(userName) async {
      AuthPrefsHelper authPrefsHelper = AuthPrefsHelper();

@@ -17,7 +17,7 @@ class _LoggedState extends State<Logged> {
     // TODO: implement initState
     super.initState();
     profileService = ProfileService();
-  }
+ }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,8 +42,7 @@ class _LoggedState extends State<Logged> {
               child: CircularProgressIndicator(),
             ),);
           }
-          else if (!snapshot.hasError){
-            print(snapshot.error);
+          else if (snapshot.hasError){
             return Center(child: Container(
               child:Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,6 +82,7 @@ class _LoggedState extends State<Logged> {
             ));
           }
           else {
+            var data = snapshot.data;
             return Center(child: Container(
               child:Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +98,7 @@ class _LoggedState extends State<Logged> {
                     child:Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
-                        child: Text("User name ${snapshot.data.toString()}",overflow: TextOverflow.ellipsis,style: TextStyle(
+                        child: Text("User name ${data['Data']['userName'].toString()}",overflow: TextOverflow.ellipsis,style: TextStyle(
                           color:ColorPicker.primaryTextColor,
                         ),textAlign: TextAlign.center,),
                       ),

@@ -8,6 +8,7 @@ import 'package:chat_testing/Module_auth/repository/auth/auth_repository.dart';
 import 'package:chat_testing/Module_auth/request/register_request/register_request.dart';
 import 'package:chat_testing/Module_auth/service/auth_service/auth_service.dart';
 import 'package:chat_testing/Module_theme/ColorPicker.dart';
+import 'package:chat_testing/module_profile/profile_routes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 class Register extends StatefulWidget {
@@ -130,7 +131,10 @@ class _RegisterState extends State<Register> {
                       setState(() {
                         loading = true;
                       });
-                      authService.registerUser(username.text,email.text,password.text).whenComplete(() => setState((){
+                      authService.registerUser(username.text,email.text,password.text).then((value){
+                        if(value)
+                        Navigator.pushNamed(context, ProfileRoutes.Logged);
+                      }).whenComplete(() => setState((){
                         loading = false;
                       }));
                     }

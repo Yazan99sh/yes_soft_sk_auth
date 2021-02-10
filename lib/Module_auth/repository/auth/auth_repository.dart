@@ -59,8 +59,7 @@ class AuthRepository {
 
   Future<LoginResponse> loginApi(LoginRequestApi loginRequest) async {
     _apiClient = ApiClient();
-    Map<String, String> headers = {'Access-Control-Allow':'*',
-      'Content-Type':'application/json'};
+    Map<String, String> headers = {'Content-Type':'application/json'};
     var result = await _apiClient.post(Urls.CREATE_TOKEN_API,headers,loginRequest.toJson(),);
     if (result == null) {
       return null;
